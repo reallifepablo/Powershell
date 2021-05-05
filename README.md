@@ -4,7 +4,7 @@ ps.dumb
 
 # Active Directory
 
-[B] Copy memberships [/b]
+# Copy memberships
 Get-ADUser -Identity K404068 -Properties memberof |
 Select-Object -ExpandProperty memberof | 
 Add-ADGroupMember -Members W102185
