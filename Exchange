@@ -13,3 +13,25 @@ Set-Mailbox MAILBOX –EmailAddresses @{remove=’alias@contoso.com’}
 Search for address
 Get-Recipient –Filter {EmailAddress –like ‘smtp:da*’ –or EmailAddress –like ‘da*’}
 
+List all users with specific smtp
+get-mailbox -resultsize unlimited | where {$_.primarysmtpaddress -like "*@contoso.com"} | Measure-Object
+
+Enable multibooking for a Resource Mailbox
+Set-CalendarProcessing -Identity "Conference Room" -AllowConflicts $true
+
+Migrate on prem to cloud
+New-MoveRequest -Identity ALIAS@contoso.com -TargetDatabase SERVER\Path\MDB01 -BadItemLimit 2000 –AcceptLargeDataLoss
+
+Assign full access permission to mailbox
+Add-MailboxPermission -Identity "MAILBOX" -user "Mailbox Alias or Mailboxgroup Alias" -AccessRights FullAccess -InheritanceType All
+
+
+
+Out of Office message
+Set-MailboxAutoReplyConfiguration -Identity ALIAS -AutoReplyState Enabled -InternalMessage "Internal Message" -ExternalMessage "External Message"
+
+
+
+
+Links
+https://www.msb365.blog/?cat=2
