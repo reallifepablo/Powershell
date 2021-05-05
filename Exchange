@@ -1,1 +1,15 @@
 #Exchange 
+
+
+Get alias
+Get-Mailbox MAILBOX | select –expand emailaddresses alias
+
+Add alias
+Set-Mailbox MAILBOX –EmailAddresses @{Add=’alias@contoso.com’}
+
+Remove alias
+Set-Mailbox MAILBOX –EmailAddresses @{remove=’alias@contoso.com’}
+
+Search for address
+Get-Recipient –Filter {EmailAddress –like ‘smtp:da*’ –or EmailAddress –like ‘da*’}
+
