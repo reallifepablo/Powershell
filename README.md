@@ -1,2 +1,45 @@
 # Powershell
 ps.dumb
+
+
+# Active Directory
+
+# Copy memberships
+Get-ADUser -Identity K404068 -Properties memberof |
+Select-Object -ExpandProperty memberof | 
+Add-ADGroupMember -Members W102185
+
+# Local admin password
+Get-ADComputer ZLE3398 -Properties ms-MCS-AdmPwd | select ms-MCS-AdmPwd
+
+# Account Lockout
+
+$username = ‘W101636’
+ 
+#$dcs = (Get-ADDomainController -Filter *).hostname
+$dcs = "colodc03.internal.financecorp.biz", "sosladc04.internal.financecorp.biz", "sosladc03.internal.financecorp.biz"
+ 
+Foreach ($dc in $dcs) {
+ 
+    $eParams = @{
+ 
+        ‘Computername’ = $dc
+        ‘LogName’ = ‘Security’
+        ‘FilterXPath’ = "*[System[EventID=4740] and EventData[Data[@Name='TargetUserName']='$username']]"
+ 
+        }
+ 
+    Write-host "------ $dc ------"
+    
+    $events = Get-WinEvent @eParams -ErrorAction SilentlyContinue
+    $events | foreach {$_.Properties[1].Value}
+ 
+}
+
+# Server access group by name
+Get-ADGroup -Filter {name -like "*SOSLDKBUILD01*"} | select name
+
+# Restore AD Object
+Get-ADObject -Filter {displayName -eq "Frank Fisker"} -IncludeDeletedObjects | Restore-ADObject
+
+
