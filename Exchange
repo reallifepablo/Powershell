@@ -1,5 +1,9 @@
 #Exchange 
 
+Connect to Exchange
+$UserCredential = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://FQDN/PowerShell/ -Authentication Kerberos -Credential $UserCredential
+Import-PSSession $Session
 
 Get alias
 Get-Mailbox MAILBOX | select –expand emailaddresses alias
