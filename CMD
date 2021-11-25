@@ -1,0 +1,4 @@
+CMD
+
+# Serialnumber lookup 
+wmic /user:Administrator /node:Computername bios get serialnumber
